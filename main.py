@@ -14,6 +14,8 @@ S_INDEX = 'twitter_fdl_20152016'
 S_DOCTYPE = 'tweet'
 N_CSV_NUMBER = 3
 
+
+#test
 # OPTIONS
 # TIMESTAMP EN MS !
 S_TIMESTAMP_BEGIN = ''
