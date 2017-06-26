@@ -69,7 +69,7 @@ class cBatchId:
                                                      {"must":[
                                                      {"match":
                                                           {"text":
-                                                               {"query": sKeyWords, "operator": "or"}}},
+                                                               {"query": 'sKeyWords', "operator": "or"}}},
                                                     {'range': {'timestamp_ms': {'gte': self.sDateBegin,
                                                                                      'lte': self.sDateEnd}}}
                                                      ]}}})
@@ -105,6 +105,8 @@ class cBatchId:
         for hit in xResponse['hits']['hits']:
             #self.xIdPack.update({hit['_source']['id_str']:1})
             print(hit['_source']['text'])
+            xFile.write(hit['_source']['id_str'] + '; ')
+            xFile.write(hit['_source']['timestamp_ms'] + '; ')
             xFile.write(hit['_source']['text'] + '\n')
             self.nCurrentSize += 1
             nCmpt += 1
@@ -124,6 +126,8 @@ class cBatchId:
                 for hit in xResponse['hits']['hits']:
                     #self.xIdPack.update({hit['_source']['id_str']:1})
                     test = (hit['_source']['text'])
+                    xFile.write(hit['_source']['id_str'] + '; ')
+                    xFile.write(hit['_source']['timestamp_ms'] + '; ')
                     xFile.write(hit['_source']['text'] + '\n')
                     self.nCurrentSize += 1
                     nCmpt += 1
