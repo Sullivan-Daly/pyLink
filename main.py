@@ -15,6 +15,10 @@ S_DOCTYPE = 'tweet'
 N_CSV_NUMBER = 3
 
 
+# FILE
+F_DATA_FROM = "../Results/tweets_MABED.csv"
+F_DATA_TO = "../Results/data_MABED.csv"
+
 #test
 # OPTIONS
 # TIMESTAMP EN MS !
@@ -58,7 +62,7 @@ class cBatchId:
         sKeyWords = sKeyWords[:-1]
         sKeyWords += '"'
 
-        xFile = open("data.txt", "w", encoding='utf8')
+        xFile = open(F_DATA_TO, "w", encoding='utf8')
 
         lFields = ['id_str']
 
@@ -69,10 +73,11 @@ class cBatchId:
                                                      {"must":[
                                                      {"match":
                                                           {"text":
-                                                               {"query": 'sKeyWords', "operator": "or"}}},
+                                                               {"query": sKeyWords, "operator": "or"}}},
                                                     {'range': {'timestamp_ms': {'gte': self.sDateBegin,
                                                                                      'lte': self.sDateEnd}}}
                                                      ]}}})
+
 
             self.nIndexSize = int(xResponse['hits']['total'])
 
@@ -119,8 +124,6 @@ class cBatchId:
         while (nCmpt < self.nIndexSize):
             try:
                 nCmpt -= 1
-                print(nCmpt)
-                print(self.nIndexSize)
                 xResponse = self.xEs.scroll(scroll_id = self.sScroll, scroll ='10s')
                 self.sScroll = xResponse['_scroll_id']
                 for hit in xResponse['hits']['hits']:
@@ -131,14 +134,9 @@ class cBatchId:
                     xFile.write(hit['_source']['text'] + '\n')
                     self.nCurrentSize += 1
                     nCmpt += 1
-                    if nCmpt > 506000:
-                        print (nCmpt)
                 nCmpt += 1
             except e:
-                print(e)
                 break
-        print('toto2')
-        print(nCmpt)
         xFile.close()
         print ('FIN DE LA REQUETE ES')
 
@@ -147,7 +145,7 @@ class cBatchId:
 
 
 def extraction():
-    xCsvFile = open("test_result.csv", "r")
+    xCsvFile = open(F_DATA_FROM, "r")
     nLine = 1
     for line in xCsvFile:
         if nLine == N_CSV_NUMBER:
