@@ -12,12 +12,12 @@ S_GRANULARITY = '100'
 # OBLIGATOIRE
 S_INDEX = 'twitter_fdl_20152016'
 S_DOCTYPE = 'tweet'
-N_CSV_NUMBER = 3
+N_CSV_NUMBER = 2
 
 
 # FILE
-F_DATA_FROM = "../Results/tweets_MABED.csv"
-F_DATA_TO = "../Results/data_MABED.csv"
+F_DATA_TO = "../Results/tweets_MABED.csv"
+F_DATA_FROM = "../Results/data_MABED.csv"
 
 #test
 # OPTIONS
@@ -62,7 +62,7 @@ class cBatchId:
         sKeyWords = sKeyWords[:-1]
         sKeyWords += '"'
 
-        xFile = open(F_DATA_TO, "w", encoding='utf8')
+        xFile = open(F_DATA_TO, "w", encoding='utf16')
 
         lFields = ['id_str']
 
@@ -149,8 +149,8 @@ def extraction():
     nLine = 1
     for line in xCsvFile:
         if nLine == N_CSV_NUMBER:
-            sDateBegin = line.split(';')[0]
-            sDateEnd = line.split(';')[1]
+            sDateBegin = line.split('; ')[0]
+            sDateEnd = line.split('; ')[1]
             sKeyWords = line.split(';')[2][1:]
             tKeyWords = sKeyWords.split(', ')
             nLine += 1
