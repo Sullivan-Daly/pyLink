@@ -12,11 +12,11 @@ S_GRANULARITY = '100'
 # OBLIGATOIRE
 S_INDEX = 'twitter_fdl_20152016'
 S_DOCTYPE = 'tweet'
-N_CSV_NUMBER = 2
-
+N_CSV_NUMBER = 3
+N_NGRAM = 3
 
 # FILE
-F_DATA_TO = "../Results/tweets_MABED.csv"
+F_DATA_TO = "../Results/tweets_MABED_3gram.csv"
 F_DATA_FROM = "../Results/data_MABED.csv"
 
 #test
@@ -73,7 +73,7 @@ class cBatchId:
                                                      {"must":[
                                                      {"match":
                                                           {"text":
-                                                               {"query": sKeyWords, "operator": "or"}}},
+                                                               {"query": sKeyWords, "operator": "or", "minimum_should_match": N_NGRAM}}},
                                                     {'range': {'timestamp_ms': {'gte': self.sDateBegin,
                                                                                      'lte': self.sDateEnd}}}
                                                      ]}}})
